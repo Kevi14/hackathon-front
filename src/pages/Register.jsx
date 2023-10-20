@@ -1,117 +1,94 @@
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import FormHelperText from '@mui/material/FormHelperText';
-import Link from '@mui/material/Link';
-import Stack from '@mui/material/Stack';
-import SvgIcon from '@mui/material/SvgIcon';
+import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Link from '@mui/material/Link';
 
+const Register = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    termsAccepted: false,
+  });
 
-const Register = ()=>{
-    return(
-        <div>
-            <Box sx={{ mb: 4 }}>
-                <Link
-                    color="text.primary"
-                    href="/"
-                    sx={{
-                        alignItems: 'center',
-                        display: 'inline-flex',
-                    }}
-                    underline="hover"
-                >
-                    <SvgIcon sx={{ mr: 1 }}>
-                        Leftt
-                    </SvgIcon>
-                    <Typography variant="subtitle2">
-                        Dashboard
-                    </Typography>
-                </Link>
-            </Box>
-            <Stack
-                sx={{ mb: 4 }}
-                spacing={1}
-            >
-                <Typography variant="h5">
-                    Register
-                </Typography>
-                <Typography
-                    color="text.secondary"
-                    variant="body2"
-                >
-                    Already have an account?
-                    &nbsp;
-                    <Link
-                        href="#"
-                        underline="hover"
-                        variant="subtitle2"
-                    >
-                        Log in
-                    </Link>
-                </Typography>
-            </Stack>
-            <form
-                noValidate
-                onSubmit={()=>{}}
-            >
-                <Stack spacing={3}>
-                    <TextField
-                        fullWidth
-                        label="Name"
-                        name="name"
-                    />
-                    <TextField
-                        fullWidth
-                        label="Email Address"
-                        name="email"
-                        type="email"
-                    />
-                    <TextField
-                        fullWidth
-                        label="Password"
-                        name="password"
-                        type="password"
-                    />
-                </Stack>
-                <Box
-                    sx={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        ml: -1,
-                        mt: 1,
-                    }}
-                >
-                    <Checkbox
-                        name="policy"
-                    />
-                    <Typography
-                        color="text.secondary"
-                        variant="body2"
-                    >
-                        I have read the
-                        {' '}
-                        <Link
-                            component="a"
-                            href="#"
-                        >
-                            Terms and Conditions
-                        </Link>
-                    </Typography>
-                </Box>
+  const handleInputChange = (event) => {
+    const { name, value, type, checked } = event.target;
+    type === 'checkbox' ? setFormData({ ...formData, [name]: checked }) : setFormData({ ...formData, [name]: value });
+  };
 
-                <Button
-                    fullWidth
-                    size="large"
-                    sx={{ mt: 3 }}
-                    type="submit"
-                    variant="contained"
-                >
-                    Register
-                </Button>
-            </form>
-        </div>
-    )
-}
-export default Register
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Submitted data:", formData);
+  };
+
+  return (
+    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+      <Typography variant="h4" gutterBottom>
+        Register
+      </Typography>
+      
+      <TextField
+        fullWidth
+        margin="normal"
+        label="Name"
+        variant="outlined"
+        name="name"
+        value={formData.name}
+        onChange={handleInputChange}
+      />
+
+      <TextField
+        fullWidth
+        margin="normal"
+        label="Email"
+        variant="outlined"
+        name="email"
+        type="email"
+        value={formData.email}
+        onChange={handleInputChange}
+      />
+
+      <TextField
+        fullWidth
+        margin="normal"
+        label="Password"
+        variant="outlined"
+        name="password"
+        type="password"
+        value={formData.password}
+        onChange={handleInputChange}
+      />
+
+      <FormControlLabel
+        control={
+          <Checkbox
+            name="termsAccepted"
+            checked={formData.termsAccepted}
+            onChange={handleInputChange}
+          />
+        }
+        label={
+          <>
+            I accept the <Link href="#">Terms and Conditions</Link>
+          </>
+        }
+      />
+
+      <Button
+        fullWidth
+        type="submit"
+        variant="contained"
+        color="primary"
+        sx={{ mt: 3 }}
+      >
+        Register
+      </Button>
+    </Box>
+  );
+};
+
+export default Register;

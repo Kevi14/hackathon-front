@@ -1,30 +1,21 @@
-import VerticalNavbar from "./layout/NavBar.jsx";
-import {
-    createBrowserRouter,
-    createRoutesFromElements,
-    Route,
-    RouterProvider
-} from "react-router-dom";
-import Home from "./pages/Home.jsx";
-import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
+
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import VerticalNavbar from './layout/NavBar.jsx';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+
 function App() {
-
-    const router = createBrowserRouter(
-        createRoutesFromElements(
-            <Route path="/" element={<VerticalNavbar />}>
-                <Route index element={<Home />} />
-                <Route path="login" element={<Login />} />
-                <Route path="register" element={<Register />} />
-            </Route>
-        )
-    )
-
   return (
-    <>
-        <RouterProvider router={router}/>
-    </>
-  )
+    <Router>
+      <VerticalNavbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
